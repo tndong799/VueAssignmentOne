@@ -130,7 +130,7 @@ var app = new Vue ({
                     message: 'Name this pixel is required.'
                 })
             }else if(!/^([^0-9]*)$/.test(this.namePixel)){
-                // Cho phép ký tự và khoảng trắng
+                // not allow numbers
                 this.errors.push({
                     field: 'namePixel',
                     message: 'Name this pixel not allow numbers.'
@@ -142,6 +142,7 @@ var app = new Vue ({
                     message: 'Facebook pixel id is required.'
                 })
             }else if(!/^\d+$/.test(this.idPixel)){
+                // Only numbers
                 this.errors.push({
                     field: 'idPixel',
                     message: 'Facebook pixel id is only number.'
@@ -153,12 +154,15 @@ var app = new Vue ({
         },
         handleSubmitAutoForm(e){
             // submit auto form
-            alert(`
+            if(this.businessAccount && this.pixelAccount){
+                alert(`
                 Business account: ${this.businessAccount},
                 Pixel: ${this.pixelAccount},
                 Target: ${this.targetAutoForm},
                 Convert API: ${this.isConvertApiAutoForm}
             `)
+            }
+            
         }
     },
     computed: {
@@ -176,6 +180,7 @@ var app = new Vue ({
                 }
                 return pixelAccounts
             }
+            // when selected option default, error will hidden
             this.isMissingPixel = false
             return []
         },

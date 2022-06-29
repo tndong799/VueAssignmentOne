@@ -60,17 +60,17 @@
             </button>
             <h1 class="text-xl leading-6 font-semibold text-dark-gray-01">Add New Facebook Pixel</h1>
             <div class="border-t border-solid border-blue-gray-05 mt-4 mb-5"></div>
-            <ul class="flex list-none gap-x-5 mb-5">
-                <li class="flex-1">
-                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded cursor-pointer" :class="{'border-primary': isActiveTab('auto_input_pixel')}" for="auto_input_pixel">
+            <ul class="flex items-stretch list-none gap-x-5 mb-5">
+                <li class="flex-1 flex">
+                    <label class="flex flex-1 items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded cursor-pointer" :class="{'border-primary': isActiveTab('auto_input_pixel')}" for="auto_input_pixel">
                         <input @click="setActiveTab('auto_input_pixel')" class="w-4 h-4 tex" type="radio" id="auto_input_pixel" name="input_pixel" value="auto" :checked="isActiveTab('auto_input_pixel')"/>
-                        <span class="text-dark-gray-03 font-medium text-sm leading-[17px]" :class="{'text-primary': isActiveTab('auto_input_pixel')}">Auto input pixel</span>
+                        <span class="text-dark-gray-03 font-medium text-sm leading-[17px] select-none" :class="{'text-primary': isActiveTab('auto_input_pixel')}">Auto input pixel</span>
                     </label>
                 </li>
-                <li class="flex-1" >
-                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded cursor-pointer" :class="{'border-primary': isActiveTab('manual_input_pixel')}" for="manual_input_pixel">
+                <li class="flex-1  flex" >
+                    <label class="flex flex-1 items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded cursor-pointer" :class="{'border-primary': isActiveTab('manual_input_pixel')}" for="manual_input_pixel">
                         <input @click="setActiveTab('manual_input_pixel')"  class="w-4 h-4" type="radio" id="manual_input_pixel" name="input_pixel" value="manual" :checked="isActiveTab('manual_input_pixel')"/>
-                        <span class="text-dark-gray-03 font-medium text-sm leading-[17px]" :class="{'text-primary': isActiveTab('manual_input_pixel')}">Manual input pixel</span>
+                        <span class="text-dark-gray-03 font-medium text-sm leading-[17px] select-none" :class="{'text-primary': isActiveTab('manual_input_pixel')}">Manual input pixel</span>
                     </label>
                 </li>
             </ul>
@@ -96,7 +96,7 @@
                     <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="business_account">Select Business Account</label>
                     <select @change="handleChangeBusinessAccount" v-model="businessAccount" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01">
                         <option selected value="">Choose Business Account</option>
-                        <option v-for="option in listBusinessAccount" v-bind:value="option.id" >{{option.id}} - {{ option.name }}</option>
+                        <option v-for="option in listBusinessAccount" :key="option.id" v-bind:value="option.id" >{{option.id}} - {{ option.name }}</option>
                     </select>
                 </div>
 
@@ -104,7 +104,7 @@
                     <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="pixel">Select Pixel</label>
                     <select v-model="pixelAccount" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01" :class="{'cursor-not-allowed': handleSelectPixel}" :disabled="handleSelectPixel">
                         <option selected value="">Select your pixel</option>
-                        <option v-for="option in getAccountPixel" v-bind:value="option.id">{{option.id}} - {{ option.name }}</option>
+                        <option v-for="option in getAccountPixel" :key="option.id" v-bind:value="option.id">{{option.id}} - {{ option.name }}</option>
                     </select>
                 </div>
 
@@ -134,9 +134,9 @@
                         <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" @click.prevent="" href="#">Learn more</a></p>
                     </div>
                     <div class="flex">
-                        <label for="conversionApi" class="flex items-start cursor-pointer">
+                        <label for="conversionAutoApi" class="flex items-start cursor-pointer">
                             <div class="relative">
-                                <input type="checkbox"  id="conversionApi" v-model="isConvertApiAutoForm" class="sr-only">
+                                <input type="checkbox"  id="conversionAutoApi" v-model="isConvertApiAutoForm" class="sr-only">
                                 <div class="bg block bg-light-gray-01 w-9 h-5 rounded-full"></div>
                                 <div class="dot absolute left-[3px] top-1/2 -translate-y-[50%] bg-white w-3.5 h-3.5 rounded-full transition"></div>
                             </div>
@@ -186,9 +186,9 @@
                         <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" @click.prevent="" href="">Learn more</a></p>
                     </div>
                     <div class="flex">
-                        <label for="conversionApi" class="flex items-start cursor-pointer">
+                        <label for="conversionManualApi" class="flex items-start cursor-pointer">
                             <div class="relative">
-                                <input type="checkbox"  id="conversionApi" v-model="isConvertApiManualForm" class="sr-only">
+                                <input type="checkbox"  id="conversionManualApi" v-model="isConvertApiManualForm" class="sr-only">
                                 <div class="bg block bg-light-gray-01 w-9 h-5 rounded-full"></div>
                                 <div class="dot absolute left-[3px] top-1/2 -translate-y-[50%] bg-white w-3.5 h-3.5 rounded-full transition"></div>
                             </div>
