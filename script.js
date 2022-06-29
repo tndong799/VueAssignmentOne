@@ -182,6 +182,7 @@ var app = new Vue ({
             }
             // when selected option default, error will hidden
             this.isMissingPixel = false
+            this.pixelAccount = ''
             return []
         },
         showErrorNamePixel(){
