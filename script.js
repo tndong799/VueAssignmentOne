@@ -89,6 +89,7 @@ var app = new Vue ({
         listBusinessAccount,
         listPixelAccount,
         businessAccount : '',
+        pixelAccount: '',
         isMissingPixel : false,
         targetAutoForm: '',
         isConvertApiAutoForm: false,
@@ -98,6 +99,7 @@ var app = new Vue ({
         targetManualForm: '',
         errors: []
     },
+
     methods: {
         setActiveTab(tab){
             this.activeTab = tab
@@ -146,11 +148,17 @@ var app = new Vue ({
                 })
             }
             if(this.errors.length === 0){
-                // submit manual form
+                alert(`submit form successfully!!`)
             }
         },
         handleSubmitAutoForm(e){
             // submit auto form
+            alert(`
+                Business account: ${this.businessAccount},
+                Pixel: ${this.pixelAccount},
+                Target: ${this.targetAutoForm},
+                Convert API: ${this.isConvertApiAutoForm}
+            `)
         }
     },
     computed: {
@@ -159,14 +167,14 @@ var app = new Vue ({
         },
         getAccountPixel(){
             if(this.businessAccount){
-                let pixelAcounts = this.listPixelAccount.filter((acc) => acc.parentId == this.businessAccount)
+                let pixelAccounts = this.listPixelAccount.filter((acc) => acc.parentId == this.businessAccount)
 
-                if(pixelAcounts.length === 0){
+                if(pixelAccounts.length === 0){
                     this.isMissingPixel = true
                 }else{
                     this.isMissingPixel = false
                 }
-                return pixelAcounts
+                return pixelAccounts
             }
             this.isMissingPixel = false
             return []

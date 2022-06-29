@@ -27,10 +27,16 @@
                     'light-gray-03': '#f3f3f3',
                     'light-gray-05': '#f7f8fa',
                     'light-error-01': '#FF999F',
+                },
+                width: {
+                    '500': '500px' 
                 }
             },
             fontFamily: {
                 sans: ['"Inter"', 'sans-serif']
+            },
+            screens: {
+                'mobile': {'max': '640px'}
             }
         }
         }
@@ -45,19 +51,24 @@
     </style>
 </head>
 <body>
-    <div id="app" class="py-10 bg-[#f5f5f5] min-h-screen">
-        <div class="w-[500px] mx-auto bg-white px-10 pt-8 pb-7 flex flex-col rounded-2xl">
+    <div id="app" class="py-10 bg-[#f5f5f5] min-h-screen mobile:px-2">
+        <div class="relative w-500 mx-auto bg-white px-10 pt-8 pb-7 flex flex-col rounded-2xl overflow-hidden mobile:w-full">
+            <button class="absolute top-3 right-3 h-5 flex items-center">
+                <svg fill="currentColor" width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.66016 6.25L11.2812 2.66406L12.0195 1.92578C12.125 1.82031 12.125 1.64453 12.0195 1.50391L11.2461 0.730469C11.1055 0.625 10.9297 0.625 10.8242 0.730469L6.5 5.08984L2.14062 0.730469C2.03516 0.625 1.85938 0.625 1.71875 0.730469L0.945312 1.50391C0.839844 1.64453 0.839844 1.82031 0.945312 1.92578L5.30469 6.25L0.945312 10.6094C0.839844 10.7148 0.839844 10.8906 0.945312 11.0312L1.71875 11.8047C1.85938 11.9102 2.03516 11.9102 2.14062 11.8047L6.5 7.44531L10.0859 11.0664L10.8242 11.8047C10.9297 11.9102 11.1055 11.9102 11.2461 11.8047L12.0195 11.0312C12.125 10.8906 12.125 10.7148 12.0195 10.6094L7.66016 6.25Z" fill="#828282"/>
+                </svg>
+            </button>
             <h1 class="text-xl leading-6 font-semibold text-dark-gray-01">Add New Facebook Pixel</h1>
             <div class="border-t border-solid border-blue-gray-05 mt-4 mb-5"></div>
             <ul class="flex list-none gap-x-5 mb-5">
                 <li class="flex-1">
-                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded" :class="{'border-primary': isActiveTab('auto_input_pixel')}" for="auto_input_pixel">
+                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded cursor-pointer" :class="{'border-primary': isActiveTab('auto_input_pixel')}" for="auto_input_pixel">
                         <input @click="setActiveTab('auto_input_pixel')" class="w-4 h-4 tex" type="radio" id="auto_input_pixel" name="input_pixel" value="auto" :checked="isActiveTab('auto_input_pixel')"/>
                         <span class="text-dark-gray-03 font-medium text-sm leading-[17px]" :class="{'text-primary': isActiveTab('auto_input_pixel')}">Auto input pixel</span>
                     </label>
                 </li>
                 <li class="flex-1" >
-                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded" :class="{'border-primary': isActiveTab('manual_input_pixel')}" for="manual_input_pixel">
+                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded cursor-pointer" :class="{'border-primary': isActiveTab('manual_input_pixel')}" for="manual_input_pixel">
                         <input @click="setActiveTab('manual_input_pixel')"  class="w-4 h-4" type="radio" id="manual_input_pixel" name="input_pixel" value="manual" :checked="isActiveTab('manual_input_pixel')"/>
                         <span class="text-dark-gray-03 font-medium text-sm leading-[17px]" :class="{'text-primary': isActiveTab('manual_input_pixel')}">Manual input pixel</span>
                     </label>
@@ -72,13 +83,13 @@
                     <div class="flex flex-col ml-4 gap-y-1">
                         <h3 class="text-dark-gray-01 font-semibold text-sm leading-[17px]">Lotusprayer Store</h3>
                         <span class="flex items-center gap-x-1 text-success font-normal text-xs leading-[15px]">
-                            <svg fill="currentColor" width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg fill="currentColor" width="13" height="12" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.1953 0.46875L4.03125 6.63281L1.78125 4.35938C1.66406 4.26562 1.47656 4.26562 1.38281 4.35938L0.703125 5.03906C0.609375 5.13281 0.609375 5.32031 0.703125 5.4375L3.84375 8.55469C3.96094 8.67188 4.125 8.67188 4.24219 8.55469L11.2734 1.52344C11.3672 1.42969 11.3672 1.24219 11.2734 1.125L10.5938 0.46875C10.5 0.351562 10.3125 0.351562 10.1953 0.46875Z" fill="#35B26F"/>
                             </svg>
                             Connected
                         </span>
                     </div>
-                    <button class="ml-auto p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm font-normal leading-4 text-dark-gray-02">Change Account</button>
+                    <button class="ml-auto p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm font-normal leading-4 text-dark-gray-02" type="button">Change Account</button>
                 </div>
 
                 <div class="mt-5 flex flex-col gap-y-2">
@@ -91,15 +102,15 @@
 
                 <div class="mt-5 flex flex-col gap-y-2">
                     <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="pixel">Select Pixel</label>
-                    <select class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01" :disabled="handleSelectPixel">
-                        <option selected>Select your pixel</option>
+                    <select v-model="pixelAccount" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01" :class="{'cursor-not-allowed': handleSelectPixel}" :disabled="handleSelectPixel">
+                        <option selected value="">Select your pixel</option>
                         <option v-for="option in getAccountPixel" v-bind:value="option.id">{{option.id}} - {{ option.name }}</option>
                     </select>
                 </div>
 
                 <div class="flex mt-5 px-4 py-5 rounded bg-light-error-01 bg-opacity-20 gap-x-3" v-if="isMissingPixel">
                     <div>
-                        <button class="h-5 w-5">
+                        <button class="h-5 w-5 cursor-default">
                             <img class="w-full h-full object-cover" src="./assets/images/times-circle.png" alt="Times img">
                         </button>
                     </div>
@@ -120,7 +131,7 @@
                 <div class="flex mt-5 gap-x-5">
                     <div>
                         <h4 class="text-sm leading-4 font-semibold text-dark-gray-01">Conversion API</h4>
-                        <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" href="">Learn more</a></p>
+                        <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" @click.prevent="" href="#">Learn more</a></p>
                     </div>
                     <div class="flex">
                         <label for="conversionApi" class="flex items-start cursor-pointer">
@@ -146,7 +157,7 @@
 
                 <div class="mt-5 flex gap-x-5">
                     <button @click.prevent="clearAutoForm" class="py-2 px-[26px] border border-solid border-blue-gray-05 rounded font-semibold text-sm leading-4 text-dark-gray-01">Cancle</button>
-                    <button @click.prevent="handleSubmitAutoForm" class="flex-1 py-2 bg-primary rounded font-semibold text-sm leading-4 text-white">Save</button>
+                    <button @click.prevent="handleSubmitAutoForm" type="submit" class="flex-1 py-2 bg-primary rounded font-semibold text-sm leading-4 text-white">Save</button>
                 </div>
 
             </form>
@@ -172,7 +183,7 @@
                 <div class="flex mt-5 gap-x-5">
                     <div>
                         <h4 class="text-sm leading-4 font-semibold text-dark-gray-01">Conversion API</h4>
-                        <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" href="">Learn more</a></p>
+                        <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" @click.prevent="" href="">Learn more</a></p>
                     </div>
                     <div class="flex">
                         <label for="conversionApi" class="flex items-start cursor-pointer">
@@ -193,12 +204,12 @@
                 </div>
 
                 <div class="relative mt-5 flex">
-                    <div class="absolute -translate-x-10 w-[500px] h-[1px] bg-blue-gray-05"></div>
+                    <div class="absolute -translate-x-10 w-500 h-[1px] bg-blue-gray-05 mobile:w-full"></div>
                 </div>
 
                 <div class="mt-5 flex gap-x-5">
                     <button @click.prevent="clearManualForm" class="py-2 px-[26px] border border-solid border-blue-gray-05 rounded font-semibold text-sm leading-4 text-dark-gray-01">Cancle</button>
-                    <button @click.prevent="handleSubmitManualForm" class="flex-1 py-2 bg-primary rounded font-semibold text-sm leading-4 text-white">Save</button>
+                    <button @click.prevent="handleSubmitManualForm" type="submit" class="flex-1 py-2 bg-primary rounded font-semibold text-sm leading-4 text-white">Save</button>
                 </div>
             </form>
         </div>
