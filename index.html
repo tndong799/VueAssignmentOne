@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'primary': '#5b86e5',
+                    'success': '#35B26F',
+                    'blue-gray-05': '#E5E8EF',
+                    'dark-gray-01': '#252627',
+                    'dark-gray-02': '#4f4f4f',
+                    'dark-gray-03': '#828282',
+                    'light-gray-01': '#CECECE',
+                    'light-gray-03': '#f3f3f3',
+                    'light-gray-05': '#f7f8fa',
+                    'light-error-01': '#FF999F',
+                }
+            },
+            fontFamily: {
+                sans: ['"Inter"', 'sans-serif']
+            }
+        }
+        }
+    </script>
+    <style>
+        input:checked ~ .dot {
+            transform: translate(calc(100% + 2px), -50%);
+        }
+        input:checked ~ .bg {
+            background-color: #5b86e5;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="py-10 bg-[#f5f5f5] min-h-screen">
+        <div class="w-[500px] mx-auto bg-white px-10 pt-8 pb-7 flex flex-col rounded-2xl">
+            <h1 class="text-xl leading-6 font-semibold text-dark-gray-01">Add New Facebook Pixel</h1>
+            <div class="border-t border-solid border-blue-gray-05 mt-4 mb-5"></div>
+            <ul class="flex list-none gap-x-5 mb-5">
+                <li class="flex-1">
+                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded" :class="{'border-primary': isActiveTab('auto_input_pixel')}" for="auto_input_pixel">
+                        <input @click="setActiveTab('auto_input_pixel')" class="w-4 h-4 tex" type="radio" id="auto_input_pixel" name="input_pixel" value="auto" :checked="isActiveTab('auto_input_pixel')"/>
+                        <span class="text-dark-gray-03 font-medium text-sm leading-[17px]" :class="{'text-primary': isActiveTab('auto_input_pixel')}">Auto input pixel</span>
+                    </label>
+                </li>
+                <li class="flex-1" >
+                    <label class="flex items-center gap-x-2 py-3 pl-2.5 border border-solid border-blue-gray-05 rounded" :class="{'border-primary': isActiveTab('manual_input_pixel')}" for="manual_input_pixel">
+                        <input @click="setActiveTab('manual_input_pixel')"  class="w-4 h-4" type="radio" id="manual_input_pixel" name="input_pixel" value="manual" :checked="isActiveTab('manual_input_pixel')"/>
+                        <span class="text-dark-gray-03 font-medium text-sm leading-[17px]" :class="{'text-primary': isActiveTab('manual_input_pixel')}">Manual input pixel</span>
+                    </label>
+                </li>
+            </ul>
+            <form id="form_auto" v-if="isActiveTab('auto_input_pixel')">
+                <div class="flex bg-light-gray-05 px-3 py-4 border border-solid border-light-gray-03 rounded">
+                    <div class="w-[34px] h-[34px] relative">
+                        <img class="w-full h-full object-cover" src="./assets/images/avatar.png" alt="avatar">
+                        <img class="absolute bottom-0 right-0 translate-x-[30%] translate-y-[30%] w-5 h-5 object-cover" src="./assets/images/logo_fb.png" alt="Logo fb">
+                    </div>
+                    <div class="flex flex-col ml-4 gap-y-1">
+                        <h3 class="text-dark-gray-01 font-semibold text-sm leading-[17px]">Lotusprayer Store</h3>
+                        <span class="flex items-center gap-x-1 text-success font-normal text-xs leading-[15px]">
+                            <svg fill="currentColor" width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.1953 0.46875L4.03125 6.63281L1.78125 4.35938C1.66406 4.26562 1.47656 4.26562 1.38281 4.35938L0.703125 5.03906C0.609375 5.13281 0.609375 5.32031 0.703125 5.4375L3.84375 8.55469C3.96094 8.67188 4.125 8.67188 4.24219 8.55469L11.2734 1.52344C11.3672 1.42969 11.3672 1.24219 11.2734 1.125L10.5938 0.46875C10.5 0.351562 10.3125 0.351562 10.1953 0.46875Z" fill="#35B26F"/>
+                            </svg>
+                            Connected
+                        </span>
+                    </div>
+                    <button class="ml-auto p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm font-normal leading-4 text-dark-gray-02">Change Account</button>
+                </div>
+
+                <div class="mt-5 flex flex-col gap-y-2">
+                    <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="business_account">Select Business Account</label>
+                    <select @change="handleChangeBusinessAccount" v-model="businessAccount" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01">
+                        <option selected value="">Choose Business Account</option>
+                        <option v-for="option in listBusinessAccount" v-bind:value="option.id" >{{option.id}} - {{ option.name }}</option>
+                    </select>
+                </div>
+
+                <div class="mt-5 flex flex-col gap-y-2">
+                    <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="pixel">Select Pixel</label>
+                    <select class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01" :disabled="handleSelectPixel">
+                        <option selected>Select your pixel</option>
+                        <option v-for="option in getAccountPixel" v-bind:value="option.id">{{option.id}} - {{ option.name }}</option>
+                    </select>
+                </div>
+
+                <div class="flex mt-5 px-4 py-5 rounded bg-light-error-01 bg-opacity-20 gap-x-3" v-if="isMissingPixel">
+                    <div>
+                        <button class="h-5 w-5">
+                            <img class="w-full h-full object-cover" src="./assets/images/times-circle.png" alt="Times img">
+                        </button>
+                    </div>
+                    <div class="">
+                        <h4 class="text-sm leading-5 font-semibold text-dark-gray-02">Missing pixel</h4>
+                        <p class="font-normal text-xs leading-4 text-dark-gray-02">You don’t have any Facebook Pixels in this Business Account. Change Business Account or <a @click="setActiveTab('manual_input_pixel')" class="text-primary underline cursor-pointer">Create New Facebook Pixel</a> first.</p>
+                    </div>
+                </div>
+
+                <div class="mt-5 flex flex-col gap-y-2">
+                    <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="target">Target</label>
+                    <select v-model="targetAutoForm" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01">
+                        <option value="" selected>Select target</option>
+                        <option value="entire" >Entire page</option>
+                    </select>
+                </div>
+
+                <div class="flex mt-5 gap-x-5">
+                    <div>
+                        <h4 class="text-sm leading-4 font-semibold text-dark-gray-01">Conversion API</h4>
+                        <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" href="">Learn more</a></p>
+                    </div>
+                    <div class="flex">
+                        <label for="conversionApi" class="flex items-start cursor-pointer">
+                            <div class="relative">
+                                <input type="checkbox"  id="conversionApi" v-model="isConvertApiAutoForm" class="sr-only">
+                                <div class="bg block bg-light-gray-01 w-9 h-5 rounded-full"></div>
+                                <div class="dot absolute left-[3px] top-1/2 -translate-y-[50%] bg-white w-3.5 h-3.5 rounded-full transition"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mt-[25px] py-0.5 flex items-center justify-center gap-x-2 border border-solid border-[#FF9600] rounded ">
+                    <div class="w-8 h-8 rounded-[16px] flex items-center justify-center bg-[#FFFAE9]">
+                        <img src="./assets/images/bell.png" alt="Bell img">
+                    </div>
+                    <h5 class="font-medium text-sm leading-4 text-[#FF9600]">Please <span class="font-bold">UPGRADE</span> your plan to use Conversion API</h5>
+                </div>
+
+                <div class="relative mt-5 flex">
+                    <div class="absolute -translate-x-10 w-[500px] h-[1px] bg-blue-gray-05"></div>
+                </div>
+
+                <div class="mt-5 flex gap-x-5">
+                    <button @click.prevent="clearAutoForm" class="py-2 px-[26px] border border-solid border-blue-gray-05 rounded font-semibold text-sm leading-4 text-dark-gray-01">Cancle</button>
+                    <button @click.prevent="handleSubmitAutoForm" class="flex-1 py-2 bg-primary rounded font-semibold text-sm leading-4 text-white">Save</button>
+                </div>
+
+            </form>
+            <form id="form_manual" v-if="isActiveTab('manual_input_pixel')" >
+                <div class="flex flex-col gap-y-2">
+                    <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="name_pixel">Name this pixel</label>
+                    <input v-model="namePixel" placeholder="Input your pixel name" type="text" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01" id="name_pixel">
+                    <span v-if="showErrorNamePixel.length > 0" class="text-xs leading-4 font-normal text-red-500">{{showErrorNamePixel.length > 0 && showErrorNamePixel[0].message }}</span>
+                </div>
+
+                <div class="mt-5 flex flex-col gap-y-2">
+                    <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="id_pixel">Enter Facebook Pixel ID</label>
+                    <input v-model="idPixel" placeholder="Input your pixel id" type="text" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01" id="id_pixel">
+                    <span v-if="showErrorIdPixel.length > 0" class="text-xs leading-4 font-normal text-red-500">{{showErrorIdPixel.length > 0 && showErrorIdPixel[0].message }}</span>
+                </div>
+                <div class="mt-5 flex flex-col gap-y-2">
+                    <label class="text-dark-gray-01 text-sm leading-4 font-medium" for="target">Target</label>
+                    <select v-model="targetManualForm" class="p-3 bg-white border border-solid border-blue-gray-05 rounded text-sm leading-4 font-normal text-dark-gray-01">
+                        <option value="" selected>Select target</option>
+                        <option value="entire" >Entire page</option>
+                    </select>
+                </div>
+                <div class="flex mt-5 gap-x-5">
+                    <div>
+                        <h4 class="text-sm leading-4 font-semibold text-dark-gray-01">Conversion API</h4>
+                        <p class="mt-1 text-xs leading-[14.52px] font-normal text-dark-gray-03">Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a class="text-primary" href="">Learn more</a></p>
+                    </div>
+                    <div class="flex">
+                        <label for="conversionApi" class="flex items-start cursor-pointer">
+                            <div class="relative">
+                                <input type="checkbox"  id="conversionApi" v-model="isConvertApiManualForm" class="sr-only">
+                                <div class="bg block bg-light-gray-01 w-9 h-5 rounded-full"></div>
+                                <div class="dot absolute left-[3px] top-1/2 -translate-y-[50%] bg-white w-3.5 h-3.5 rounded-full transition"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mt-[25px] py-0.5 flex items-center justify-center gap-x-2 border border-solid border-[#FF9600] rounded ">
+                    <div class="w-8 h-8 rounded-[16px] flex items-center justify-center bg-[#FFFAE9]">
+                        <img src="./assets/images/bell.png" alt="Bell img">
+                    </div>
+                    <h5 class="font-medium text-sm leading-4 text-[#FF9600]">Please <span class="font-bold">UPGRADE</span> your plan to use Conversion API</h5>
+                </div>
+
+                <div class="relative mt-5 flex">
+                    <div class="absolute -translate-x-10 w-[500px] h-[1px] bg-blue-gray-05"></div>
+                </div>
+
+                <div class="mt-5 flex gap-x-5">
+                    <button @click.prevent="clearManualForm" class="py-2 px-[26px] border border-solid border-blue-gray-05 rounded font-semibold text-sm leading-4 text-dark-gray-01">Cancle</button>
+                    <button @click.prevent="handleSubmitManualForm" class="flex-1 py-2 bg-primary rounded font-semibold text-sm leading-4 text-white">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
